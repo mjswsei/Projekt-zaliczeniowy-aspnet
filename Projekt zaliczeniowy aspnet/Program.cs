@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Projekt_zaliczeniowy_aspnet.Data;
+
 namespace Projekt_zaliczeniowy_aspnet
 {
 	public class Program
@@ -8,6 +11,9 @@ namespace Projekt_zaliczeniowy_aspnet
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
+
+			builder.Services.AddDbContext<ApplicationDbContext>(options =>
+				options.UseSqlServer(builder.Configuration.GetConnectionString("StudentPortal")));
 
 			var app = builder.Build();
 
