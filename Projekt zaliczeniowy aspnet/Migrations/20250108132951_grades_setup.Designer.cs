@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projekt_zaliczeniowy_aspnet.Data;
 
@@ -11,9 +12,11 @@ using Projekt_zaliczeniowy_aspnet.Data;
 namespace Projekt_zaliczeniowy_aspnet.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250108132951_grades_setup")]
+    partial class grades_setup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -71,65 +74,6 @@ namespace Projekt_zaliczeniowy_aspnet.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Grade");
-                });
-
-            modelBuilder.Entity("Projekt_zaliczeniowy_aspnet.Models.Lecture", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsEndingWithExam")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("LecturerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LecturerId");
-
-                    b.ToTable("Lecture");
-                });
-
-            modelBuilder.Entity("Projekt_zaliczeniowy_aspnet.Models.Lecturer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Lecturer");
-                });
-
-            modelBuilder.Entity("Projekt_zaliczeniowy_aspnet.Models.Lecture", b =>
-                {
-                    b.HasOne("Projekt_zaliczeniowy_aspnet.Models.Lecturer", "Lecturer")
-                        .WithMany()
-                        .HasForeignKey("LecturerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lecturer");
                 });
 #pragma warning restore 612, 618
         }

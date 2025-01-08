@@ -5,7 +5,11 @@
 }
 @model List<Projekt_zaliczeniowy_aspnet.Models.Entities.Student>   
 
-<h1>Students List</h1>
+<h1>Students List
+    <a class="btn btn-success"
+            asp-action="Add" asp-controller="Students">Add student</a>
+</h1>
+
 
 <table>
     <thead>

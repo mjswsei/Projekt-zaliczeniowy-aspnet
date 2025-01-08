@@ -17,15 +17,13 @@ namespace Projekt_zaliczeniowy_aspnet.Controllers
 		}
 
 		[HttpGet]
-		
-		// Add
 		public IActionResult Add()
 		{
 			return View();
 		}
 
 		[HttpPost]
-		//
+		//Students/Add
 		public async Task<IActionResult> Add(AddStudentViewModel viewModel)
 		{
 			var student = new Student
@@ -39,23 +37,24 @@ namespace Projekt_zaliczeniowy_aspnet.Controllers
 			};
 			await dbContext.Students.AddAsync(student);
 			await dbContext.SaveChangesAsync();
-			return View(viewModel);
+			return RedirectToAction("List", "Students");
 		}
 
 		[HttpGet]
+		//Students/List
 		public async Task<IActionResult> List()
 		{
 			var students = await dbContext.Students.ToListAsync();
 			return View(students);
 		}
-
+		//Students/Edit
 		[HttpGet]
 		public async Task<IActionResult> Edit(Guid id)
 		{
 			var student = await dbContext.Students.FindAsync(id);
 			return View(student);
 		}
-
+		//Students/Edit
 		[HttpPost]
 		public async Task<IActionResult> Edit(Student modelStudent)
 		{
@@ -72,7 +71,7 @@ namespace Projekt_zaliczeniowy_aspnet.Controllers
 			}
 			return RedirectToAction("List", "Students");
 		}
-
+		//Students/Delete
 		[HttpPost]
 		public async Task<IActionResult> Delete(Student viewModel)
 		{

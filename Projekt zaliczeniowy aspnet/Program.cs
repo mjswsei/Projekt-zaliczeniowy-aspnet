@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Projekt_zaliczeniowy_aspnet.Data;
+using Microsoft.AspNetCore.Identity;
+using Projekt_zaliczeniowy_aspnet.Areas.Identity.Data;
 
 namespace Projekt_zaliczeniowy_aspnet
 {
@@ -9,11 +11,22 @@ namespace Projekt_zaliczeniowy_aspnet
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
+			//First DbContext
+			builder.Services.AddDbContext<ApplicationDbContext>(options =>
+				options.UseSqlServer(builder.Configuration.GetConnectionString("StudentPortal")));
+
+			//Second DbContext
+			builder.Services.AddDbContext<Projekt_AuthDbContext>(options =>
+				options.UseSqlServer(builder.Configuration.GetConnectionString("Projekt_AuthDbContextConnection")));
+
+
+			builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+				.AddEntityFrameworkStores<Projekt_AuthDbContext>();
+
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
 
-			builder.Services.AddDbContext<ApplicationDbContext>(options =>
-				options.UseSqlServer(builder.Configuration.GetConnectionString("StudentPortal")));
+			builder.Services.AddRazorPages();
 
 			var app = builder.Build();
 
@@ -35,6 +48,7 @@ namespace Projekt_zaliczeniowy_aspnet
 			app.MapControllerRoute(
 				name: "default",
 				pattern: "{controller=Home}/{action=Index}/{id?}");
+			app.MapRazorPages();
 
 			app.Run();
 		}
