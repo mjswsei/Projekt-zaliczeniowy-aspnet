@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Projekt_zaliczeniowy_aspnet.Data;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Projekt_zaliczeniowy_aspnet
 {
@@ -13,6 +14,9 @@ namespace Projekt_zaliczeniowy_aspnet
 			//First DbContext
 			builder.Services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(builder.Configuration.GetConnectionString("StudentPortal")));
+
+			builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+				.AddEntityFrameworkStores<ApplicationDbContext>();
 
 			// Add services to the container.
 			builder.Services.AddControllersWithViews();
